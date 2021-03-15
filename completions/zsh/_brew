@@ -454,6 +454,7 @@ _brew_bump() {
     '(--formula)--cask[Check only casks]' \
     '--debug[Display any debugging information]' \
     '(--cask)--formula[Check only formulae]' \
+    '--full-name[Print formulae/casks with fully-qualified names]' \
     '--help[Show this message]' \
     '--limit[Limit number of package results returned]' \
     '--no-pull-requests[Do not retrieve pull requests from GitHub]' \
