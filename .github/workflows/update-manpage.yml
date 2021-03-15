@@ -40,7 +40,7 @@ jobs:
 
           if git ls-remote --exit-code --heads origin "$BRANCH"; then
             git checkout "$BRANCH"
-            git reset origin/master
+            git reset --hard origin/master
           else
             git checkout -B "$BRANCH" origin/master
             BRANCH_EXISTS="1"
@@ -67,11 +67,9 @@ jobs:
 
       - name: Push commits
         if: steps.update.outputs.committed == 'true'
-        uses: Homebrew/actions/git-try-push@master
-        with:
-          token: ${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}
-          branch: ${{ steps.update.outputs.branch }}
-          force: true
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}@github.com/${{ github.repository }}
+          git push --force-with-lease origin ${{ steps.update.outputs.branch }}
 
       - name: Open a pull request
         if: steps.update.outputs.pull_request == 'true'
